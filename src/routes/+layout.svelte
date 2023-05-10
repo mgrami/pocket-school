@@ -2,18 +2,19 @@
 	import '../styles/global.css'
 	import { currentUser } from '../lib/pocketbase'
 
-	let show_side_nav =true
+	let show_side_nav = false
 </script>
 
 <header>
-	<nav class="navbar"> 
-		<div style="display: flex;">
-		<div>
+	<nav class="navbar">
+		<div style="display: flex; width: 100%;">
+
+		<div style="width: 5em;">
 		<span style="cursor: pointer;" id="hamburger" on:click={() => show_side_nav = !show_side_nav}>&#9776;</span>
-		<a href="/" style="text-decoration: none; font-size: 0.9em;">Home</a>
+		<a href="/" style="text-decoration: none;">Home</a>
 		</div>
 
-		<div style="width: 80%;">
+		<div style="width: 80%;" class="hide-on-mobile">
 		<div style="background: #EEE; height: 2em; width: 17em; margin: 0 auto; border-radius: 1em;">
 		<form id="search-form" method="GET" action="">
 			<input type="text" name="q" 
@@ -24,6 +25,7 @@
 		</form>
 		</div>
 		</div>
+
 		</div>
 	</nav>
 </header>
@@ -42,6 +44,7 @@
       </form>
       </div>
       {:else}
+      <div class="side_nav_item"><a href="/posts">Posts</a></div>
       <div class="side_nav_item"><a href="/login">Signup</a></div>
       <div class="side_nav_item"><a href="/login">login</a></div>
       {/if}
@@ -58,7 +61,9 @@
   .navbar {
     background: #FFF;
     color: #aaa;
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;    
+    padding-left: 0.5em;
     margin-bottom: 0;
   }
   .navbar a {
@@ -77,7 +82,7 @@
   #side_nav {
     font-size: 0.9em;
     height: 100vh;
-    width: 10em;
+    width: 9em;
     max-width: 15%;
     padding: 1em;
   }
@@ -104,14 +109,14 @@
   }
   #search-form {
     height: 2em;
-    width: 17em;
+/*    width: 17em;*/
     margin: 0 auto;
   }
   #search-form input {
     margin-right: 0;
     padding: 0.2em;
     height: 2em;
-    width: 14em;
+/*    width: 14em;*/
   }
   #search-form button {
     background: #EEE;
@@ -119,5 +124,8 @@
     padding: 0.2em;
     height: 2em;
     width: 2em;
+  }
+  @media (max-width: 640px) {
+    .hide-on-mobile{display: none;}
   }
 </style>
