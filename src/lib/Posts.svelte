@@ -21,6 +21,7 @@
 </script>
 
 <!-- <div style="display: flex; justify-content: space-around; flex-wrap: wrap;"> -->
+
 <div style="display: grid; grid-template-columns: repeat( auto-fit, minmax(20em, 1fr));">
 	{#each posts as post (post?.id)}
 		<PostOverView {post} />

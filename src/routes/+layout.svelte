@@ -6,14 +6,15 @@
 </script>
 
 <header>
-	<nav class="navbar">
+	<nav class="navbar"> 
 		<div style="display: flex;">
 		<div>
 		<span style="cursor: pointer;" id="hamburger" on:click={() => show_side_nav = !show_side_nav}>&#9776;</span>
-		<a href="/" style="text-decoration: none;">Home</a>
+		<a href="/" style="text-decoration: none; font-size: 0.9em;">Home</a>
 		</div>
+
 		<div style="width: 80%;">
-		<div style="background: #EEE; height: 2em; width: 20em; margin: 0 auto; border-radius: 1em;">
+		<div style="background: #EEE; height: 2em; width: 17em; margin: 0 auto; border-radius: 1em;">
 		<form id="search-form" method="GET" action="">
 			<input type="text" name="q" 
 				style="border-top-left-radius: 1em; border-bottom-left-radius: 1em; padding-left: 1em;">
@@ -29,23 +30,23 @@
 
 <main>
 	<div style="display: flex;">
-		<div id="side_nav" style={show_side_nav? 'display: block;' : 'display: none'}>
-			{#if $currentUser}
-			<div class="side_nav_item">{$currentUser?.username}</div>
-			<div class="side_nav_item"><a href="/posts">Posts</a></div>
-			<div class="side_nav_item"><a href="/posts/create">New Post</a></div>
-			<div class="side_nav_item"><a href="/chat">Chat</a></div>
-			<div class="side_nav_item">
-			<form method="POST" action="/logout/">
-			<button style="background: #FFF; margin-left: 0;">Logout</button>
-			</form>
-			</div>
-			{:else}
-			<div class="side_nav_item"><a href="/login">Signup</a></div>
-			<div class="side_nav_item"><a href="/login">login</a></div>
-			{/if}
-		</div>
-		<div style="width: 100%; background: #F8F8F8; border-top: 1px solid #DDD;">
+    <div id="side_nav" style={show_side_nav? 'display: block;' : 'display: none;'}>
+      {#if $currentUser}
+      <div class="side_nav_item">{$currentUser?.username}</div>
+      <div class="side_nav_item"><a href="/posts">Posts</a></div>
+      <div class="side_nav_item"><a href="/posts/create">New Post</a></div>
+      <div class="side_nav_item"><a href="/chat">Chat</a></div>
+      <div class="side_nav_item">
+      <form method="POST" action="/logout/">
+      <button style="background: #FFF; margin-left: 0;">Logout</button>
+      </form>
+      </div>
+      {:else}
+      <div class="side_nav_item"><a href="/login">Signup</a></div>
+      <div class="side_nav_item"><a href="/login">login</a></div>
+      {/if}
+    </div>
+    <div style="width: 100%; background: #F8F8F8; border-top: 1px solid #DDD;">
 			<slot/>
 		</div>
 	</div>
@@ -102,16 +103,15 @@
     text-decoration: none;
   }
   #search-form {
-    /*background: #EEE;*/
     height: 2em;
-    width: 20em;
+    width: 17em;
     margin: 0 auto;
   }
   #search-form input {
     margin-right: 0;
     padding: 0.2em;
     height: 2em;
-    width: 17em;
+    width: 14em;
   }
   #search-form button {
     background: #EEE;
