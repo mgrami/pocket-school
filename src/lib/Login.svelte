@@ -23,7 +23,7 @@
 
 </script>
 
-{#if $currentUser}
+{#if pb.authStore.isValid && $currentUser}
 	<p>Signed in as {$currentUser.username}</p>
 	<button on:click={logout}>Logout</button>
 {:else}

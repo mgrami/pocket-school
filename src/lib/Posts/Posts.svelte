@@ -1,7 +1,7 @@
 <script>
 	import { onMount, onDestroy } from 'svelte'
 	import { pb, currentUser } from '$lib/pocketbase'
-	import PostOverView from '$lib/PostOverView.svelte'
+	import PostPreview from '$lib/Posts/PostPreview.svelte'
 
 	export let posts = []
 	// let posts = []
@@ -24,7 +24,7 @@
 
 <div style="display: grid; grid-template-columns: repeat( auto-fit, minmax(20em, 1fr));">
 	{#each posts as post (post?.id)}
-		<PostOverView {post} />
+		<PostPreview {post} />
 	{/each}
 </div>
 

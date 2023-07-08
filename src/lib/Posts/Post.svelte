@@ -2,20 +2,23 @@
 	import { page } from '$app/stores'
 	import { onMount, onDestroy } from 'svelte'
 	import { pb, currentUser } from '$lib/pocketbase'
-	import LikePost from '$lib/LikePost.svelte'
+	import LikePost from '$lib/Posts/LikePost.svelte'
 
+	export let id
 	export let post
 
 	onMount(async () => {
 		try{
-			post = await pb.collection('posts').getOne($page.params.id, {expand: 'user',})
+			post = await pb.collection('posts').getOne(id, {expand: 'user',})
 		}
 		catch(err){
 			console.log(err)
 		}
 	})
+
 </script>
 
+{#if post}
 <div>
 	<h2 dir="auto">{post?.title}</h2>
 	<div dir="auto">{@html post?.content}</div>
@@ -27,5 +30,10 @@
 		<LikePost postId={post?.id}/>
 	</div>
 </div>
+{:else}
+<div style="text-align: center;">
+	Loading...
+</div>
+{/if}
 
 

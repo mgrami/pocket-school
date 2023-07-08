@@ -1,8 +1,8 @@
 <script>
-	import '../styles/global.css'
-	import { currentUser } from '../lib/pocketbase'
+  import '../styles/global.css'
+  import { pb, currentUser } from '../lib/pocketbase'
 
-	let show_side_nav = false
+  let show_side_nav = false
 </script>
 
 <header>
@@ -10,17 +10,16 @@
 		<div style="display: flex; width: 100%;">
 
 		<div style="width: 5em;">
-		<span style="cursor: pointer;" id="hamburger" on:click={() => show_side_nav = !show_side_nav}>&#9776;</span>
+		<span style="cursor: pointer;" id="hamburger" on:click={() => show_side_nav = !show_side_nav}>&#x2630;</span>
 		<a href="/" style="text-decoration: none;">Home</a>
 		</div>
 
 		<div style="width: 80%;" class="hide-on-mobile">
 		<div style="background: #EEE; height: 2em; width: 17em; margin: 0 auto; border-radius: 1em;">
-		<form id="search-form" method="GET" action="">
-			<input type="text" name="q" 
-				style="border-top-left-radius: 1em; border-bottom-left-radius: 1em; padding-left: 1em;">
+		<form id="search-form" method="GET" action>
+			<input type="text" name="q" style="border-top-left-radius: 1em; border-bottom-left-radius: 1em; padding-left: 1em;">
 			<button type="submit">
-				<img src="/icons/search-icon.svg" style="width: 0.9em;">
+				<img src="/icons/search-icon.svg" alt style="width: 0.9em;">
 			</button>
 		</form>
 		</div>
@@ -31,12 +30,16 @@
 </header>
 
 <main>
-	<div style="display: flex;">
-    <div id="side_nav" style={show_side_nav? 'display: block;' : 'display: none;'}>
-      {#if $currentUser}
+  <div style="display: flex;">
+    <div id="side_nav" style="{show_side_nav? 'display: block;' : 'display: none;'}">
+      {#if pb.authStore.isValid && $currentUser}
       <div class="side_nav_item">{$currentUser?.username}</div>
+      <div class="side_nav_item"><a href="/books">Books</a></div>
+      <div class="side_nav_item"><a href="/books/create">+Book</a></div>
       <div class="side_nav_item"><a href="/posts">Posts</a></div>
-      <div class="side_nav_item"><a href="/posts/create">New Post</a></div>
+      <div class="side_nav_item"><a href="/posts/create">+Post</a></div>
+      <div class="side_nav_item"><a href="/questions_choosing">Questions</a></div>
+      <div class="side_nav_item"><a href="/questions_choosing/create">+Question</a></div>
       <div class="side_nav_item"><a href="/chat">Chat</a></div>
       <div class="side_nav_item">
       <form method="POST" action="/logout/">
@@ -49,10 +52,10 @@
       <div class="side_nav_item"><a href="/login">login</a></div>
       {/if}
     </div>
-    <div style="width: 100%; background: #F8F8F8; border-top: 1px solid #DDD;">
-			<slot/>
-		</div>
-	</div>
+    <div style="width: 100%; min-height: 100vh; background: #F8F8F8; border-top: 1px solid #DDD;">
+      <slot></slot>
+    </div>
+  </div>
 </main>
 
 <footer></footer>

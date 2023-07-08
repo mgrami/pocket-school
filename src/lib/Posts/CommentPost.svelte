@@ -1,7 +1,7 @@
 <script>
 	import { onMount, onDestroy } from 'svelte'
 	import { pb, currentUser } from '$lib/pocketbase'
-	import CommentRepliesPost from '$lib/CommentRepliesPost.svelte'
+	import CommentRepliesPost from '$lib/Posts/CommentRepliesPost.svelte'
 
 	export let postId
 	let comments = []
@@ -62,7 +62,7 @@
 
 		{#if comment?.expand?.user?.id == $currentUser?.id}
 		<span style="cursor: pointer;" on:click={() => deleteComment(comment?.id)}>
-			<img src="/icons/trash-icon.svg" style="width: 0.9em;" />
+			<img src="/icons/trash-icon.svg" alt="" style="width: 0.9em;" />
 		</span>
 		{/if}
 

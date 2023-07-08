@@ -1,5 +1,5 @@
 <script>
-	import Posts from '$lib/Posts.svelte'
+	import Posts from '$lib/Posts/Posts.svelte'
 </script>
 
 <Posts/>

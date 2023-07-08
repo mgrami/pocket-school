@@ -32,6 +32,7 @@
 	}
 
 	async function toggleLike(){
+		console.log(pb.authStore.isValid)
 		if(!liked){
 			try{
 				await pb.collection('likes_post').create({
