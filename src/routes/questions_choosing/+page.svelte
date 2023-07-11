@@ -22,21 +22,17 @@
 
 <div style="display: grid; grid-template-columns: repeat( auto-fit, minmax(20em, 1fr));">
 {#each questions as question (question?.id)}
-<div class="card">
+<div class="xcard card m-2 p-4">
 	<QuestionChoosing id={question?.id}/>
 </div>
 {/each}
 </div>
 
 <style>	
-	.card {
+	.xcard {
 		width: 95%;
 		max-width: 900px;
 		min-height: 250px;
 		margin: 1em auto;
-		padding: 0.75em;
-		background: #FFF;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.2em;
 	}
 </style>

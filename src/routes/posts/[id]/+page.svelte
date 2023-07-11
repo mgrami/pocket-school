@@ -27,31 +27,30 @@
 	}
 </script>
 
-<div class="card">
+<div class="m-2 p-4">
 
 	<Post id={$page.params?.id}/>
 
 	{#if $currentUser?.id == post?.user}
-	<div style="font-size:0.8em; height: 1em; margin-top: 1.2em;">
-		<span style="cursor: pointer; padding: 0.25em;" on:click={deleteConfirm}>
-			<img src="/icons/trash-icon.svg" alt="" style="width: 1.2em;" />
-		</span>
-		<span style="cursor: pointer;" on:click={() => showEdit=!showEdit}>
-			<img src="/icons/edit-box-icon.svg" alt="" style="width: 1.2em;" />
-		</span>
-	</div>
+		<div style="font-size:0.8em; height: 1em; margin-top: 1.2em;">
+			<span style="cursor: pointer; padding: 0.25em;" on:click={deleteConfirm}>
+				<img src="/icons/trash-icon.svg" alt="" style="width: 1.2em;" />
+			</span>
+			<span style="cursor: pointer;" on:click={() => showEdit=!showEdit}>
+				<img src="/icons/edit-box-icon.svg" alt="" style="width: 1.2em;" />
+			</span>
+		</div>
+		{#if showEdit}
+		<PostUpdate {post}/>
+		{/if}
 	{/if}
-
-	{#if showEdit}
-	<PostUpdate {post}/>
-	{/if}
-
+	
 	<CommentPost postId={post?.id}/>
 
 </div>
 
 <style>
-	.card {
+	.card0 {
 		width: 95%;
 		max-width: 900px;
 		min-height: 250px;

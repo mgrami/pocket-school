@@ -53,8 +53,8 @@
 	<strong style="margin-bottom: 1em;">Comments</strong>
 
 	<form on:submit|preventDefault={sendComment}>
-		<textarea bind:value={newComment}></textarea>
-		<input type="submit" value="">
+		<textarea bind:value={newComment} class="textarea"></textarea>
+		<input type="submit" value="" class="btn">
 	</form>
 
 	{#each comments as comment (comment?.id)}
@@ -89,33 +89,21 @@
 		margin-bottom: 0.5em;
 	}
 
-	form{
-		display: flex;
-	}
 	input {
 		width: 100%;
 		max-width: 936px;
 		margin: 0.25em auto;
-		border: 2px solid #EEE;
-		border-radius: 0.3em;
 	}
 	textarea {
-		width: 100%;
-		max-width: 936px;
+		max-width: 80%;
 		height: 3em;
-		margin: 0.25em auto;
-		border: 1px solid #888;
-		border-radius: 0.3em;
 	}
 	input[type=submit] {
 		cursor: pointer;
 		width: 3em;
-		background: #fff;
-		color: #333;
-		border-color: #fff;
 		margin-top: 0.5em;
-		padding: 0.5em;
 		background: url("/icons/send-icon.svg") no-repeat scroll 7px 7px;
 		background-size: 1.5em;
+		border: none;
 	}
 </style>

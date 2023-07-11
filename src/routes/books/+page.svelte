@@ -20,7 +20,7 @@
 
 <div style="display: grid; grid-template-columns: repeat( auto-fit, minmax(20em, 1fr));">
 	{#each books as book (book?.id)}
-	<div class="card">
+	<div class="card m-2 p-4 xcard">
 		<h2 dir="auto">{book?.title}</h2>
 		<div dir="auto">
 			{(book?.description?.length>300 ? book?.description?.slice(0,300)+'...' : book?.description)}
@@ -38,16 +38,11 @@
 
 
 <style>
-	.card {
+	.xcard {
 		overflow: hidden;
 		position: relative;
 		min-width: 200px;
 		max-width: 350px;
 		height: 250px;
-		margin: 0.5em;
-		padding: 0.75em;
-		background: #FFF;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.2em;
 	}
 </style>

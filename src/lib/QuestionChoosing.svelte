@@ -59,31 +59,34 @@
 		<span>{question?.question}</span>
 	</div>
 	<div class="choices">
-		<div class="choice {picked==1 && 'picked'} {checked && question?.answer==1 && 'answer'}" 
+		<div class="choice card {picked==1 && 'picked'} {checked && question?.answer==1 && 'answer'}"
 		on:click={() => picked=1}>
 			{#if question?.choice1_img}<img src={question?.choice1_img} alt="">{/if}
-			<div>{question?.choice1}</div>
+			<div class="p-4">{question?.choice1}</div>
 		</div>
-		<div class="choice {picked==2 && 'picked'} {checked && question?.answer==2 && 'answer'}" 
+
+		<div class="choice card {picked==2 && 'picked'} {checked && question?.answer==2 && 'answer'}" 
 		on:click={() => picked=2}>
 			{#if question?.choice2_img}<img src={question?.choice2_img} alt="">{/if}
-			<div>{question?.choice2}</div>
+			<div class="p-4">{question?.choice2}</div>
 		</div>
-		<div class="choice {picked==3 && 'picked'} {checked && question?.answer==3 && 'answer'}" 
+
+		<div class="choice card {picked==3 && 'picked'} {checked && question?.answer==3 && 'answer'}" 
 		on:click={() => picked=3}>
 			{#if question?.choice3_img}<img src={question?.choice3_img} alt="">{/if}
-			<div>{question?.choice3}</div>
+			<div class="p-4">{question?.choice3}</div>
 		</div>
-		<div class="choice {picked==4 && 'picked'} {checked && question?.answer==4 && 'answer'}" 
+
+		<div class="choice card {picked==4 && 'picked'} {checked && question?.answer==4 && 'answer'}" 
 		on:click={() => picked=4}>
 			{#if question?.choice4_img}<img src={question?.choice4_img} alt="">{/if}
-			<div>{question?.choice4}</div>
+			<div class="p-4">{question?.choice4}</div>
 		</div>
 	</div>
 	<div>
 		<button 
 		class="
-			btn-check 
+			btn variant-ghost
 			{answer_status=='correct' && 'btn-green'}
 			{answer_status=='wrong' && 'btn-red'}
 		" 
@@ -109,18 +112,15 @@
 {/if}
 
 <style>
-	.btn-check{
-		border-radius: 0.6em;
-	}
 	.btn-green{
 		color: #FFF;
 		background:   #0D0;
-		border-color: #0D0;
+		border: none;
 	}
 	.btn-red{
 		color: #FFF;
 		background:   #F00;
-		border-color: #F00;
+		border: none;
 	}
 	.choices{
 		display: flex;
@@ -129,24 +129,19 @@
 		gap: 1em;
 	}
 	.choice{
-		width: 7em;
-/*		min-height: 7em;*/
+		width: 10em;
 		overflow: hidden;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.4em;
-		background: #fff;
 		margin: 0.5em;
-		padding: 0.5em;
 		cursor: pointer;
 	}
 	.choice img{
-		width: 7em;
-		height: 7em;
+		width: 10em;
+		height: 10em;
 	}
 	.picked{
-		box-shadow: 0 3px 10px rgb(0 0 255 / 0.5);
+		box-shadow: 0 0 10px rgb(0 0 255 / 0.7);
 	}
 	.answer{
-		box-shadow: 0 3px 10px rgb(0 255 0 / 0.5);
+		box-shadow: 0 0 10px rgb(0 255 0 / 0.7);
 	}
 </style>

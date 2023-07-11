@@ -67,7 +67,7 @@
 
 {#if book_loaded}
 
-<div class="card">
+<div class="card m-2 p-4 xcard">
 
 {#if !is_open }
 	<h2 dir="auto">{book?.title}</h2>
@@ -78,10 +78,10 @@
 		<span><strong>Author:</strong> {book?.expand?.user?.username}</span>
 		<span><strong>Created:</strong> {book?.created?.slice(0,10)}</span>
 	</div>
-	<button on:click={() =>{if(book?.pages?.length>0){is_open=true}}}>Open</button>
+	<button on:click={() =>{if(book?.pages?.length>0){is_open=true}}} class="btn variant-ghost my-4">Open</button>
 	
 	{#if $currentUser?.id == book?.user}
-	<div style="font-size:0.8em; height: 2em; margin-top: 1.2em;">
+	<div style="font-size:0.8em; height: 2em;" class="my-4">
 		<span style="cursor: pointer; padding: 0.25em;" on:click={deleteConfirm}>
 			<img src="/icons/trash-icon.svg" alt="" style="width: 1.2em;" />
 		</span>
@@ -94,13 +94,13 @@
 	{/if}
 
 	<form on:submit|preventDefault={addPage} method="POST">
-		<select bind:value={new_page_type}>
+		<select bind:value={new_page_type} class="select">
 			<option value="Post">Post</option>
 			<option value="QuestionChoosing">Choosing Question</option>
 		</select>
-		<input type="text" name="id" placeholder="ID" bind:value={new_page_id}>
+		<input type="text" name="id" placeholder="ID" bind:value={new_page_id} class="input px-4">
 		<!-- <input type="number" name="pagenumber" value={book?.pages?.length+1}> -->
-		<button>Add Page</button>
+		<button class="btn variant-ghost">Add Page</button>
 	</form>
 	{/if}
 
@@ -112,10 +112,14 @@
 		<BookPage pagetype={book?.pages[current_page-1]?.type} pageid={book?.pages[current_page-1]?.id}/>
 	{/key}
 	<div>
-		<button on:click={() => is_open=false}>Close</button>
-		<button on:click={prev} style={current_page==1 && 'display: none;'}>prev</button>
+		<button on:click={prev} style={current_page==1 && 'display: none;'} class="btn btn-sm variant-filled">
+			prev
+		</button>
 		<span>{current_page}/{book?.pages?.length}</span>
-		<button on:click={next} style={current_page>=book?.pages?.length && 'display: none;'}>next</button>
+		<button on:click={next} style={current_page>=book?.pages?.length && 'display: none;'} class="btn btn-sm variant-filled">
+			next
+		</button>
+		<button on:click={() => is_open=false} class="btn btn-sm variant-ghost">Close</button>
 	</div>
 </div>
 {/if}
@@ -124,13 +128,7 @@
 
 {/if}
 <style>
-	.card {
-		width: 95%;
+	.xcard {
 		min-height: 75vh;
-		margin: 1em auto;
-		padding: 0.5em;
-		background: #FFF;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.2em;
 	}
 </style>

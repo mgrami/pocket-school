@@ -24,52 +24,15 @@
 	}
 </script>
 
-<form class="form-post" on:submit|preventDefault={createBook}>
-	<input type="text" placeholder="Title" bind:value={title} dir="auto">
-	<textarea bind:value={description} dir="auto"></textarea>
-	<input type="submit">
+<form class="card m-2 p-4" on:submit|preventDefault={createBook}>
+	<label class="label mb-4">
+		<span>Title</span>
+		<input type="text" bind:value={title} dir="auto" class="input">
+	</label>
+	<label class="label mb-4">
+		<span>Description</span>
+		<textarea bind:value={description} dir="auto" class="textarea"></textarea>
+	</label>
+	<input type="submit" class="btn">
 </form>
 
-<style>
-	.form-post {
-		/*max-width: 400px;*/
-		width: 90%;
-		margin: 3em auto;
-		padding: 1em;
-		text-align: center;
-		background: #FFF;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.2em;
-	}
-	input {
-		width: 100%;
-		max-width: 936px;
-		margin: 0.25em auto;
-		border: 2px solid #EEE;
-		border-radius: 0.3em;
-	}
-	textarea {
-		width: 100%;
-		max-width: 936px;
-		min-height: 20em;
-		margin: 0.25em auto;
-		border: 2px solid #EEE;
-		border-radius: 0.3em;
-	}
-	input[type=submit] {
-		cursor: pointer;
-		width: 100%;
-		background: #3861FB;
-		color: #FFF;
-		border-color: #3861FB;
-		margin-top: 0.5em;
-	}
-/*	.errorlist {
-		color: #E00
-	}*/
-/*	p label {
-		margin-bottom: 0.5em;
-		padding-left: 1em;
-		text-align: left;
-	}*/
-</style>

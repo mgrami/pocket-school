@@ -69,18 +69,15 @@
 
 <div class="comments" style={showReplies ? 'display: block;' : 'display: none;'}>
 
-	<div on:click={() => reply_to_root_form = !reply_to_root_form} 
-		style="cursor: pointer; font-weight: bold; font-size: 0.9em; 
-		width: 3em; background: #eee; border-radius: 0.25em; 
-		padding: 0.25em; margin: 0.25em; text-align: center;">
+	<button on:click={() => reply_to_root_form = !reply_to_root_form} class="btn btn-sm variant-filled">
 		{reply_to_root_form? 'Close' : 'Reply'}
-	</div>
+	</button>
 
 	<form on:submit|preventDefault={sendComment} 
 		class="reply-form" 
 		style={reply_to_root_form? 'display: flex;' : 'display: none;'}>
-		<textarea bind:value={newComment}></textarea>
-		<input type="submit" value="">
+		<textarea bind:value={newComment} class="textarea"></textarea>
+		<input type="submit" value="" class="btn">
 	</form>
 
 	{#each comments as comment (comment?.id)}
@@ -102,9 +99,6 @@
 </div>
 
 
-<!-- <span><strong>{comment?.expand?.reply_to ? '@'+comment?.expand?.reply?.username : ''}</strong></span> -->
-
-
 <style>
 	.comments{
 		margin: 0.25em;
@@ -120,33 +114,20 @@
 		width: 80%;
 	}
 
-	form{
-		display: flex;
-	}
 	input {
 		width: 100%;
 		max-width: 936px;
 		margin: 0.25em auto;
-		border: 2px solid #EEE;
-		border-radius: 0.3em;
 	}
 	textarea {
-		width: 100%;
-		max-width: 936px;
 		height: 3em;
-		margin: 0.25em auto;
-		border: 1px solid #888;
-		border-radius: 0.3em;
 	}
 	input[type=submit] {
 		cursor: pointer;
 		width: 3em;
-		background: #fff;
-		color: #333;
-		border-color: #fff;
 		margin-top: 0.5em;
-		padding: 0.5em;
 		background: url("/icons/send-icon.svg") no-repeat scroll 7px 7px;
 		background-size: 1.5em;
+		border: none;
 	}
 </style>

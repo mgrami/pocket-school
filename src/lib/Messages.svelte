@@ -35,9 +35,9 @@
 	}
 </script>
 
-<div class="messages">
+<div class="messages m-2 p-4">
 	{#each messages as message (message.id)}
-		<div class="message">
+		<div class="message m-2">
 			<img
 				class="avatar"
 				src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
@@ -51,7 +51,7 @@
 	{/each}
 </div>
 
-<form on:submit|preventDefault={sendMessage}>
-	<input placeholder="Message" type="text" bind:value={newMessage}>
-	<input type="submit" name="Send">
+<form on:submit|preventDefault={sendMessage} class="m-2 p-4">
+	<input placeholder="Message" type="text" bind:value={newMessage} class="input">
+	<input type="submit" name="Send" class="btn">
 </form>
