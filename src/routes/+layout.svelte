@@ -3,7 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '../app.postcss';
 	import '../styles/global.css'
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import { pb, currentUser } from '../lib/pocketbase'
 
 	let show_side_nav = false
@@ -12,10 +12,12 @@
 <AppShell>
 <svelte:fragment slot="header">
 	<AppBar>
-			<div style="display: flex; width: 100%;">
+
+			<div style="display: flex; width: 95vw;">
+
 			<div style="width: 5em;">
 			<span style="cursor: pointer;" id="hamburger" on:click={() => show_side_nav = !show_side_nav}>&#x2630;</span>
-			<a href="/" style="text-decoration: none;">Home</a>
+			<a href="/" style="text-decoration: none;"  class="dark:text-white">Home</a>
 			</div>
 
 			<div style="width: 80%;" class="hide-on-mobile">
@@ -28,6 +30,11 @@
 			</form>
 			</div>
 			</div>
+
+			<div style="margin: 0 0 0 auto;">
+				<LightSwitch />
+			</div>
+
 			</div>
 	</AppBar>
 </svelte:fragment>
@@ -37,21 +44,21 @@
 		{#if pb.authStore.isValid && $currentUser}
 		<div class="side_nav_item">{$currentUser?.username}</div>
 		<form method="POST" action="/logout/">
-		<button style="margin-left: 0;" class="btn btn-sm variant-ghost">Logout</button>
+		<button style="margin-left: 0;" class="btn btn-sm variant-ghost dark:text-white">Logout</button>
 		</form>
-		<div class="side_nav_item"><a href="/books">Books</a></div>
-		<div class="side_nav_item"><a href="/books/create">+Book</a></div>
-		<div class="side_nav_item"><a href="/posts">Posts</a></div>
-		<div class="side_nav_item"><a href="/posts/create">+Post</a></div>
-		<div class="side_nav_item"><a href="/questions_choosing">Questions</a></div>
-		<div class="side_nav_item"><a href="/questions_choosing/create">+Question</a></div>
-		<div class="side_nav_item"><a href="/chat">Chat</a></div>
+		<div class="side_nav_item"><a href="/books" class="text-black dark:text-white">Books</a></div>
+		<div class="side_nav_item"><a href="/books/create" class="text-gray-500 dark:text-white">+Book</a></div>
+		<div class="side_nav_item"><a href="/posts" class="dark:text-white">Posts</a></div>
+		<div class="side_nav_item"><a href="/posts/create" class="dark:text-white">+Post</a></div>
+		<div class="side_nav_item"><a href="/questions_choosing" class="dark:text-white">Questions</a></div>
+		<div class="side_nav_item"><a href="/questions_choosing/create" class="dark:text-white">+Question</a></div>
+		<div class="side_nav_item"><a href="/chat" class="dark:text-white">Chat</a></div>
 		<div class="side_nav_item">
 		</div>
 		{:else}
-		<div class="side_nav_item"><a href="/posts">Posts</a></div>
-		<div class="side_nav_item"><a href="/login">Signup</a></div>
-		<div class="side_nav_item"><a href="/login">login</a></div>
+		<div class="side_nav_item"><a href="/posts" class="dark:text-white">Posts</a></div>
+		<div class="side_nav_item"><a href="/login" class="dark:text-white">Signup</a></div>
+		<div class="side_nav_item"><a href="/login" class="dark:text-white">login</a></div>
 		{/if}
 	</div>
 </svelte:fragment>
