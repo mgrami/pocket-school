@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte'
 	import { pb, currentUser } from '$lib/pocketbase'
 	import { goto } from '$app/navigation'
+	import QuestionChoosingUpdate from '$lib/QuestionChoosingUpdate.svelte'
 
 	export let id = ''
 	
@@ -96,20 +97,26 @@
 		</button>
 	</div>
 	{#if pb.authStore.isValid && $currentUser?.id==question?.user}
-	<div style="font-size:0.8em; height: 1em; margin-top: 1.2em;">
-		<span style="cursor: pointer; padding: 0.25em;" on:click={deleteConfirm}>
-			<img src="/icons/trash-icon.svg" alt="" style="width: 1.2em;" />
-		</span>
-		<span style="cursor: pointer;" on:click={() => showEdit=!showEdit}>
-			<img src="/icons/edit-box-icon.svg" alt="" style="width: 1.2em;" />
-		</span>
-	</div>
+		<div style="font-size:0.8em; height: 1em; margin-top: 1.2em;">
+			<span style="cursor: pointer; padding: 0.25em;" on:click={deleteConfirm}>
+				<img src="/icons/trash-icon.svg" alt="" style="width: 1.2em;" />
+			</span>
+			<span style="cursor: pointer;" on:click={() => showEdit=!showEdit}>
+				<img src="/icons/edit-box-icon.svg" alt="" style="width: 1.2em;" />
+			</span>
+		</div>
+		{#if showEdit}
+		<div class="mt-6">
+			<QuestionChoosingUpdate q={question} />
+		</div>
+		{/if}
 	{/if}
 {:else}
 <div style="text-align: center;">
 	Loading...
 </div>
 {/if}
+
 
 <style>
 	.btn-green{

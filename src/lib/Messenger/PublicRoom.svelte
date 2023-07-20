@@ -1,6 +1,6 @@
 <script>
 	import { onMount, onDestroy } from 'svelte'
-	import { pb, currentUser } from './pocketbase'
+	import { pb, currentUser } from '$lib/pocketbase'
 
 	let messages = []
 	let newMessage = ''

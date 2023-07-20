@@ -12,7 +12,7 @@
 		<span><strong>Created:</strong> {post?.created?.slice(0,10)}</span>
 		<span><a href={'/posts/'+ post?.id} class="ml-2  font-bold">
 			<!-- <img src="/icons/view-icon.svg" alt="" style="width: 1.4em; padding-left: 0.5em;"> -->
-			view->
+			View->
 		</a></span>
 	</footer>
 </div>

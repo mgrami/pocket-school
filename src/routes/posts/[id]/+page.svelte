@@ -48,16 +48,3 @@
 	<CommentPost postId={post?.id}/>
 
 </div>
-
-<style>
-	.card0 {
-		width: 95%;
-		max-width: 900px;
-		min-height: 250px;
-		margin: 1em auto;
-		padding: 0.75em;
-		background: #FFF;
-		box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-		border-radius: 0.2em;
-	}
-</style>

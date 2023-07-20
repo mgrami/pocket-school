@@ -1,5 +1,5 @@
 <script>
-	import { pb, currentUser } from './pocketbase'
+	import { pb, currentUser } from '$lib/pocketbase'
 
 	let username = ''
 	let password = ''

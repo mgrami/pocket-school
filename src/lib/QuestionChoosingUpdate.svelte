@@ -3,27 +3,29 @@
 	import { pb, currentUser } from '$lib/pocketbase'
 	import { goto } from '$app/navigation'
 
-	let	question_lang = 'us-en'
-	let	question = ''
-	let	question_img = ''
-	let	question_img_on = false
-	let	question_text_on = true
-	let	question_tts_on = false
-	let	choice_img_on = false
-	let	choice_text_on = true
-	let	choice_tts_on = false
-	let	choice_lang = 'us-en'
-	let	choice1 = ''
-	let	choice1_img = ''
-	let	choice2 = ''
-	let	choice2_img = ''
-	let	choice3 = ''
-	let	choice3_img = ''
-	let	choice4 = ''
-	let	choice4_img = ''
-	let	answer = 1
+	export let q
 
-	async function createQuestion(){
+	let	question_lang = q?.question_lang
+	let	question = q?.question
+	let	question_img = q?.question_img
+	let	question_img_on = q?.question_img_on
+	let	question_text_on = q?.question_text_on
+	let	question_tts_on = q?.question_tts_on
+	let	choice_img_on = q?.choice_img_on
+	let	choice_text_on = q?.choice_text_on
+	let	choice_tts_on = q?.choice_tts_on
+	let	choice_lang = q?.choice_lang
+	let	choice1 = q?.choice1
+	let	choice1_img = q?.choice1_img
+	let	choice2 = q?.choice2
+	let	choice2_img = q?.choice2_img
+	let	choice3 = q?.choice3
+	let	choice3_img = q?.choice3_img
+	let	choice4 = q?.choice4
+	let	choice4_img = q?.choice4_img
+	let	answer = q?.answer
+
+	async function updateQuestion(){
 		let data = {
 			question_lang,
 			question,
@@ -47,8 +49,9 @@
 			user: $currentUser.id,
 		}
 		try{
-			let record = await pb.collection('questions_choosing').create(data)
-			goto('/questions_choosing')
+			q = await pb.collection('questions_choosing').update(q?.id, data)
+			// goto('/questions_choosing')
+			window.location.reload()
 		}
 		catch(err){
 			console.log(err)
@@ -56,7 +59,7 @@
 	}
 </script>
 
-<form class="card m-2 p-4" on:submit|preventDefault={createQuestion}>
+<form class="card m-2 p-4" on:submit|preventDefault={updateQuestion}>
 	<label class="label mb-4">
 		<h1>Question</h1>
 		<textarea bind:value={question} dir="auto" class="textarea"></textarea>
@@ -75,7 +78,7 @@
 	<input type="checkbox" bind:checked={question_tts_on} class="checkbox">
 	<span class="mr-4">TTS</span>
 
-	<select bind:value={question_lang} class="select" style=" margin-left: 0.25em;">
+	<select bind:value={question_lang} class="select" style="width: 10%; margin-left: 0.25em;">
 		<option value="ir-fa">Persian (Iran)</option>
 		<option value="us-en">English (US)</option>
 	</select>
