@@ -18,9 +18,8 @@
 		conn = peer.connect(peerId2)
 		conn.on("open", () => {
 			showConnectForm = false
-			outMessage = "Hi, I'm connected."
 			conn.send(outMessage)
-			messages = [...messages, {dir: 'out', userId: inputId, text: outMessage}]
+			messages = [...messages, {dir: 'out', userId: inputId, text: "Hi, I'm connected."}]
 		})
 		conn.on('error', (error) => {
 			console.log('Connection error: ', error)

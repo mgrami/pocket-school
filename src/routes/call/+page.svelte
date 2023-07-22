@@ -13,20 +13,6 @@
 
 	let messages = []
 
-	function connect(){
-		peerId2 = '3f31b76f-c43b-40fd-8b1e-b160-d04bcc83-'+inputId2
-		conn = peer.connect(peerId2)
-		conn.on("open", () => {
-			showConnectForm = false
-			outMessage = "Hi, I'm connected."
-			conn.send(outMessage)
-			messages = [...messages, {dir: 'out', userId: inputId, text: outMessage}]
-		})
-		conn.on('error', (error) => {
-			console.log('Connection error: ', error)
-		})
-	}
-
 	function handlePeer(){
 		peer = new Peer('3f31b76f-c43b-40fd-8b1e-b160-d04bcc83-'+inputId)
 		// peer = new Peer()
@@ -46,6 +32,25 @@
 				console.log('Connection error: ', error)
 			})
 		})
+		peer.on('call', call => {
+			call.answer(stream)
+			call.on('stream', stream2 => {
+				addVideoStream(video2, stream2)
+			})
+		})
+	}
+
+	function connect(){
+		peerId2 = '3f31b76f-c43b-40fd-8b1e-b160-d04bcc83-'+inputId2
+		conn = peer.connect(peerId2)
+		conn.on("open", () => {
+			showConnectForm = false
+			conn.send(outMessage)
+			messages = [...messages, {dir: 'out', userId: inputId, text: "Hi, I'm connected."}]
+		})
+		conn.on('error', (error) => {
+			console.log('Connection error: ', error)
+		})
 	}
 
 	function sendMessage(){
@@ -54,7 +59,29 @@
 		outMessage = ''
 	}
 
-	// onMount(handlePeer)
+	let video  = {}
+	let video2 = {}
+	var stream
+
+	function addVideoStream(video, stream) {
+		video.srcObject = stream
+		video.addEventListener('loadedmetadata', () => {
+		video.play()
+		})
+	}
+
+	function callToPeer2() {
+		peerId2 = '3f31b76f-c43b-40fd-8b1e-b160-d04bcc83-'+inputId2
+		const call = peer.call(peerId2, stream)
+		call.on('stream', stream2 => {
+			addVideoStream(video2, stream2)
+		})
+	}
+
+	onMount(async () =>{
+		stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true})
+		addVideoStream(video, stream)
+	})
 </script>
 
 <div class="card m-2 p-4">
@@ -68,7 +95,22 @@
 		<input type="text" bind:value={inputId2} class="input m-2 pl-4 w-52" placeholder="Your friend's ID">
 		<button class="btn btn-sm variant-filled">Connect</button>
 	</form>
+	<button class="btn btn-sm variant-filled" on:click={callToPeer2}>Call</button>
 	{/if}
+
+
+
+
+
+	<div class="card m-2 p-4">
+		<video bind:this={video} class="w-32"></video>
+		<video bind:this={video2}></video>
+	</div>
+
+
+
+
+
 
 	<div class="card m-2 p-4 min-h-4">
 	{#each messages as message}
