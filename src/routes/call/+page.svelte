@@ -80,11 +80,12 @@
 
 	onMount(async () =>{
 		stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true})
+		// video.muted = true
 		addVideoStream(video, stream)
 	})
 </script>
 
-<div class="card m-2 p-4">
+<div class="card m-2 p-2">
 	<form on:submit|preventDefault={handlePeer} class="m-2">
 		<input type="text" bind:value={inputId} class="input m-2 pl-4 w-52" placeholder="Your own ID">
 		<button class="btn btn-sm variant-filled">Set ID</button>
@@ -101,12 +102,14 @@
 
 
 
-
-	<div class="card m-2 p-4">
-		<video bind:this={video} class="w-32"></video>
-		<video bind:this={video2}></video>
+	<div class="w-full max-w-xl my-2 mx-auto" style="position: relative; min-height: 100vw;">
+		<video bind:this={video}  class="w-1/4 max-w-xl m-1 rounded" muted
+			style="position: absolute; z-index: 2;" 
+		></video>
+		<video bind:this={video2} class="w-full max-w-xl mb-2 mx-auto rounded bg-black"
+			style="position: absolute; z-index: 1;"
+		></video>
 	</div>
-
 
 
 
@@ -127,3 +130,12 @@
 	</form>
 
 </div>
+
+<style>
+	video {
+		transform: scale(-1,1);
+	}
+	video::-webkit-media-controls-panel {
+		transform: scale(-1,1);
+	}
+</style>
