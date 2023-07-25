@@ -11,6 +11,13 @@
 	let inMessage
 	let outMessage
 
+	let stream
+	let video_on = true
+	let audio_on = true
+	var video  = {}
+	var video2 = {}
+
+
 	let messages = []
 
 	function handlePeer(){
@@ -59,14 +66,10 @@
 		outMessage = ''
 	}
 
-	let video  = {}
-	let video2 = {}
-	var stream
-
 	function addVideoStream(video, stream) {
 		video.srcObject = stream
 		video.addEventListener('loadedmetadata', () => {
-		video.play()
+			video.play()
 		})
 	}
 
@@ -78,9 +81,26 @@
 		})
 	}
 
+	function toggleVideo() {
+		stream.getTracks().forEach((track) => {
+			if (track.readyState == 'live' && track.kind === 'video') {
+				track.enabled = !track.enabled
+				video_on = track.enabled
+			}
+		})
+	}
+
+	function toggleAudio() {
+		stream.getTracks().forEach((track) => {
+			if (track.readyState == 'live' && track.kind === 'audio') {
+				track.enabled = !track.enabled
+				audio_on = track.enabled
+			}
+		})
+	}
+
 	onMount(async () =>{
-		stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true})
-		// video.muted = true
+		stream = await navigator.mediaDevices.getUserMedia({video: video_on, audio: audio_on})
 		addVideoStream(video, stream)
 	})
 </script>
@@ -101,16 +121,29 @@
 
 
 
-
-	<div class="w-full max-w-xl my-2 mx-auto" style="position: relative; min-height: 100vw;">
-		<video bind:this={video}  class="w-1/4 max-w-xl m-1 rounded" muted
-			style="position: absolute; z-index: 2;" 
-		></video>
-		<video bind:this={video2} class="w-full max-w-xl mb-2 mx-auto rounded bg-black"
-			style="position: absolute; z-index: 1;"
-		></video>
+	<div class="w-full max-w-xl my-2 mx-auto">
+		<button on:click={toggleVideo} 
+		class="btn btn-sm m-1 {video_on? '':'text-white bg-gray-600'}">
+			Toggle Video
+		</button>
+		<button on:click={toggleAudio} 
+		class="btn btn-sm m-1 {audio_on? '':'text-white bg-gray-600'}">
+			Toggle Audio
+		</button>
 	</div>
 
+	<div class="w-full max-w-xl my-2 mx-auto" style="position: relative; min-height: 100vw;">
+		<video bind:this={video} 
+		autoPlay="true" muted="true" playsInline="true"
+		class="w-1/4 max-w-xl m-1 rounded" 
+		style="position: absolute; z-index: 2;" 
+		></video>
+		<video bind:this={video2} 
+		autoPlay="true" playsInline="true"
+		class="w-full max-w-xl mb-2 mx-auto rounded bg-black"
+		style="position: absolute; z-index: 1;"
+		></video>
+	</div>
 
 
 
