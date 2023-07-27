@@ -7,15 +7,15 @@
 	let unsubscribe = () => {}
 
 	onMount(async () => {
-		const resultList = await pb.collection('messages').getList(1, 50, {
+		const resultList = await pb.collection('public_messages').getList(1, 50, {
 			sort: 'created',
 			expand: 'user',
 		})
 		messages = resultList.items
-		unsubscribe = await pb.collection('messages').subscribe('*', async ({action, record}) => {
+		unsubscribe = await pb.collection('public_messages').subscribe('*', async ({action, record}) => {
 			if(action === 'create'){
 				const user = await pb.collection('users').getOne(record.user)
-				record.expand ={ user }
+				record.expand = { user }
 				messages = [...messages, record]
 			}
 			if(action === 'delete'){
@@ -30,7 +30,7 @@
 
 	async function sendMessage(){
 		const data = { text: newMessage, user: $currentUser.id, }
-		const createdMessage = await pb.collection('messages').create(data)
+		const createdMessage = await pb.collection('public_messages').create(data)
 		newMessage = ''
 	}
 </script>
@@ -52,6 +52,6 @@
 </div>
 
 <form on:submit|preventDefault={sendMessage} class="m-2 p-4">
-	<input placeholder="Message" type="text" bind:value={newMessage} class="input">
+	<input placeholder="Message" type="text" bind:value={newMessage} class="input px-4">
 	<input type="submit" name="Send" class="btn">
 </form>

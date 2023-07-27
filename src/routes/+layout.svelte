@@ -1,13 +1,26 @@
 <script>
-	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
-	import '@skeletonlabs/skeleton/styles/skeleton.css';
-	import '../app.postcss';
+	import { page } from '$app/stores'
+	import '@skeletonlabs/skeleton/themes/theme-skeleton.css'
+	import '@skeletonlabs/skeleton/styles/skeleton.css'
+	import '../app.postcss'
 	import '../styles/global.css'
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton'
 	import { pb, currentUser } from '../lib/pocketbase'
 
 	let show_side_nav = false
 </script>
+
+{#if $page.url.pathname.includes('/call')}
+<AppShell>
+	<slot></slot>
+
+	<div class="p-4 flex justify-center items-center">
+		<div class="mx-4 btn btn-sm variant-filled"><a href="/">Home</a></div>
+		<div class="mx-4"><LightSwitch /></div>
+	</div>
+
+</AppShell>
+{:else}
 
 <AppShell>
 <svelte:fragment slot="header">
@@ -51,7 +64,7 @@
 		<div class="side_nav_item"><a href="/questions_choosing" class="dark:text-white">Questions</a></div>
 		<div class="side_nav_item"><a href="/questions_choosing/create" class="dark:text-white">+Question</a></div>
 		<div class="side_nav_item"><a href="/messenger/publicroom" class="dark:text-white">Room</a></div>
-		<div class="side_nav_item"><a href="/messenger/directs" class="dark:text-white">Directs</a></div>
+		<div class="side_nav_item"><a href="/messenger/chats" class="dark:text-white">Chats</a></div>
 		<div class="side_nav_item"><a href="/call" class="dark:text-white">Call</a></div>
 		<div class="side_nav_item"><a href="/peerchat" class="dark:text-white">Peer Chat</a></div>
 		<div class="side_nav_item">
@@ -74,6 +87,8 @@
   </div>
 </slot>
 </AppShell>
+{/if}
+
 
 <style>
   #side_nav {

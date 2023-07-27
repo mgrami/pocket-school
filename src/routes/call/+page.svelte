@@ -103,9 +103,41 @@
 		stream = await navigator.mediaDevices.getUserMedia({video: video_on, audio: audio_on})
 		addVideoStream(video, stream)
 	})
+
+	onDestroy(() => {
+		stream?.getTracks()?.forEach((track) => {
+			if (track?.readyState == 'live') {
+				track?.stop()
+			}
+		})
+	})
 </script>
 
-<div class="card m-2 p-2">
+<div class="">
+
+	<div class="w-full max-w-3xl mb-2 mx-auto layer-stack sm:mt-0 md:mt-8 lg:mt-8 xl:mt-8 2xl:mt-8">
+
+		<video bind:this={video} autoPlay="true" muted="true" playsInline="true"
+		class="w-1/4 max-w-3xl m-1 layer-2"></video>
+
+		<video bind:this={video2} autoPlay="true" playsInline="true" style="object-fit: cover;" 
+		class="w-full max-w-3xl mb-2 mx-auto bg-black layer-1"></video>
+
+	</div>
+
+	<div class="w-full max-w-3xl my-2 mx-auto">
+		<button on:click={toggleVideo} 
+		class="btn btn-sm m-1 {video_on? '':'text-white bg-gray-600'}">
+			Toggle Video
+		</button>
+		<button on:click={toggleAudio} 
+		class="btn btn-sm m-1 {audio_on? '':'text-white bg-gray-600'}">
+			Toggle Audio
+		</button>
+	</div>
+
+
+
 	<form on:submit|preventDefault={handlePeer} class="m-2">
 		<input type="text" bind:value={inputId} class="input m-2 pl-4 w-52" placeholder="Your own ID">
 		<button class="btn btn-sm variant-filled">Set ID</button>
@@ -118,34 +150,6 @@
 	</form>
 	<button class="btn btn-sm variant-filled" on:click={callToPeer2}>Call</button>
 	{/if}
-
-
-
-	<div class="w-full max-w-xl my-2 mx-auto">
-		<button on:click={toggleVideo} 
-		class="btn btn-sm m-1 {video_on? '':'text-white bg-gray-600'}">
-			Toggle Video
-		</button>
-		<button on:click={toggleAudio} 
-		class="btn btn-sm m-1 {audio_on? '':'text-white bg-gray-600'}">
-			Toggle Audio
-		</button>
-	</div>
-
-	<div class="w-full max-w-xl my-2 mx-auto" style="position: relative; min-height: 100vw;">
-		<video bind:this={video} 
-		autoPlay="true" muted="true" playsInline="true"
-		class="w-1/4 max-w-xl m-1 rounded" 
-		style="position: absolute; z-index: 2;" 
-		></video>
-		<video bind:this={video2} 
-		autoPlay="true" playsInline="true"
-		class="w-full max-w-xl mb-2 mx-auto rounded bg-black"
-		style="position: absolute; z-index: 1;"
-		></video>
-	</div>
-
-
 
 
 	<div class="card m-2 p-4 min-h-4">
@@ -170,5 +174,20 @@
 	}
 	video::-webkit-media-controls-panel {
 		transform: scale(-1,1);
+	}
+
+	.layer-stack {
+		display: grid;
+		grid-template-areas: "inner-layer";
+	}
+
+	.layer-1 {
+		grid-area: inner-layer;
+		z-index: 1;
+	}
+
+	.layer-2 {
+		grid-area: inner-layer;
+		z-index: 2;
 	}
 </style>
