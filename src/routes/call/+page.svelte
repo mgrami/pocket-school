@@ -29,7 +29,6 @@
 		})
 		peer.on("connection", (conn) => {
 			conn.on("data", (data) => {
-				console.log('Recieved data: ', data)
 				messages = [...messages, {dir: 'in', userId: inputId2, text: data}]
 			})
 			conn.on("open", () => {
@@ -84,6 +83,7 @@
 	function toggleVideo() {
 		stream.getTracks().forEach((track) => {
 			if (track.readyState == 'live' && track.kind === 'video') {
+				// console.log(track.getSettings())
 				track.enabled = !track.enabled
 				video_on = track.enabled
 			}
@@ -100,7 +100,9 @@
 	}
 
 	onMount(async () =>{
-		stream = await navigator.mediaDevices.getUserMedia({video: video_on, audio: audio_on})
+		// { width: 320, height: 240 }
+		// { width: 320, }
+		stream = await navigator.mediaDevices.getUserMedia({video: { width: 240, }, audio: true})
 		addVideoStream(video, stream)
 	})
 
@@ -115,56 +117,52 @@
 
 <div class="">
 
-	<div class="w-full max-w-3xl mb-2 mx-auto layer-stack sm:mt-0 md:mt-8 lg:mt-8 xl:mt-8 2xl:mt-8">
+	<div class="w-full max-w-3xl mb-1 mx-auto layer-stack sm:mt-0 md:mt-8 lg:mt-8 xl:mt-8 2xl:mt-8">
 
-		<video bind:this={video} autoPlay="true" muted="true" playsInline="true"
-		class="w-1/4 max-w-3xl m-1 layer-2"></video>
+		<video bind:this={video} autoPlay muted playsInline
+		class="w-1/4 max-w-3xl mt-0 ml-0 layer-2"></video>
 
-		<video bind:this={video2} autoPlay="true" playsInline="true" style="object-fit: cover;" 
-		class="w-full max-w-3xl mb-2 mx-auto bg-black layer-1"></video>
+		<video bind:this={video2} autoPlay playsInline style="object-fit: cover;" 
+		class="w-full max-w-3xl mx-auto bg-black layer-1"></video>
 
 	</div>
 
-	<div class="w-full max-w-3xl my-2 mx-auto">
+	<div class="w-full max-w-3xl mb-2 mx-auto px-2">
 		<button on:click={toggleVideo} 
-		class="btn btn-sm m-1 {video_on? '':'text-white bg-gray-600'}">
-			Toggle Video
-		</button>
+		class="btn btn-sm text-xs m-1 {video_on? '':'text-white bg-gray-600'}">Video</button>
 		<button on:click={toggleAudio} 
-		class="btn btn-sm m-1 {audio_on? '':'text-white bg-gray-600'}">
-			Toggle Audio
-		</button>
+		class="btn btn-sm text-xs m-1 {audio_on? '':'text-white bg-gray-600'}">Audio</button>
 	</div>
 
 
+	<div class="w-full max-w-3xl my-2 mx-auto p-1">
+		<form on:submit|preventDefault={handlePeer} class="">
+			<input type="text" bind:value={inputId} class="input m-2 pl-4 w-52" placeholder="Your own ID">
+			<button class="btn btn-sm">Set</button>
+		</form>
 
-	<form on:submit|preventDefault={handlePeer} class="m-2">
-		<input type="text" bind:value={inputId} class="input m-2 pl-4 w-52" placeholder="Your own ID">
-		<button class="btn btn-sm variant-filled">Set ID</button>
-	</form>
-
-	{#if showConnectForm}
-	<form on:submit|preventDefault={connect} class="m-2">
+		{#if showConnectForm}
 		<input type="text" bind:value={inputId2} class="input m-2 pl-4 w-52" placeholder="Your friend's ID">
-		<button class="btn btn-sm variant-filled">Connect</button>
-	</form>
-	<button class="btn btn-sm variant-filled" on:click={callToPeer2}>Call</button>
-	{/if}
+		<button class="btn btn-sm" on:click={callToPeer2}>Call</button>
+		<div></div>
+		<button class="btn btn-sm m-2" on:click={connect}>Connect to Chat</button>
+		{/if}
 
 
-	<div class="card m-2 p-4 min-h-4">
-	{#each messages as message}
-		<div class="card m-2 p-4 {message?.dir=='in' && 'bg-indigo-300 dark:bg-indigo-500/50'}">
-			<div><strong>{message?.userId}</strong></div>
-			<div>{message?.text}</div>
+		<div class="card m-2 p-4 min-h-[5em]">
+		{#each messages as message}
+			<div class="card m-2 p-4 {message?.dir=='in' && 'bg-indigo-300 dark:bg-indigo-500/50'}">
+				<div><strong>{message?.userId}</strong></div>
+				<div>{message?.text}</div>
+			</div>
+		{/each}
 		</div>
-	{/each}
-	</div>
 
-	<form on:submit|preventDefault={sendMessage} class="m-2">
-		<input type="text" bind:value={outMessage} class="input m-2 pl-4 w-52" placeholder="Your own ID">
-		<button class="btn btn-sm variant-filled">Send</button>
-	</form>
+		<form on:submit|preventDefault={sendMessage} class="m-2">
+			<input type="text" bind:value={outMessage} placeholder="Message" class="input m-2 pl-4 w-52">
+			<button class="btn btn-sm text-xs px-2 py-2">Send</button>
+		</form>
+	</div>
 
 </div>
 
