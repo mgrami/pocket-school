@@ -117,7 +117,7 @@
 
 <div class="">
 
-	<div class="w-full max-w-3xl mb-1 mx-auto layer-stack sm:mt-0 md:mt-8 lg:mt-8 xl:mt-8 2xl:mt-8">
+	<div class="w-full max-w-3xl max-h-screen mb-1 mx-auto layer-stack sm:mt-0 md:mt-8 lg:mt-8 xl:mt-8 2xl:mt-8">
 
 		<video bind:this={video} autoPlay muted playsInline
 		class="w-1/4 max-w-3xl mt-0 ml-0 layer-2"></video>
