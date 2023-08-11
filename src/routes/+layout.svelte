@@ -57,6 +57,7 @@
 		<form method="POST" action="/logout/">
 		<button style="margin-left: 0;" class="btn btn-sm variant-ghost dark:text-white">Logout</button>
 		</form>
+		<div class="side_nav_item"><a href="/users" class="dark:text-white">Users</a></div>
 		<div class="side_nav_item"><a href="/books" class="text-black dark:text-white">Books</a></div>
 		<div class="side_nav_item"><a href="/books/create" class="text-gray-500 dark:text-white">+Book</a></div>
 		<div class="side_nav_item"><a href="/posts" class="dark:text-white">Posts</a></div>
@@ -65,6 +66,7 @@
 		<div class="side_nav_item"><a href="/questions_choosing/create" class="dark:text-white">+Question</a></div>
 		<div class="side_nav_item"><a href="/messenger/publicroom" class="dark:text-white">Room</a></div>
 		<div class="side_nav_item"><a href="/messenger/chats" class="dark:text-white">Chats</a></div>
+		<div class="side_nav_item"><a href="/messenger/pvs" class="dark:text-white">PVs</a></div>
 		<div class="side_nav_item"><a href="/call" class="dark:text-white">Call</a></div>
 		<div class="side_nav_item"><a href="/peerchat" class="dark:text-white">Peer Chat</a></div>
 		<div class="side_nav_item">

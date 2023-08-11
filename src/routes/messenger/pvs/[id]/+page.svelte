@@ -10,8 +10,8 @@
 	onMount(async () => {
 		const resultList = await pb.collection('messages').getList(1, 50, {
 			sort: 'created',
-			expand: 'user,chat',
-			filter: `chat.id="${$page.params?.id}"`,
+			expand: 'user,to',
+			filter: `(user.id="${$currentUser?.id}" && to.id="${$page.params?.id}") || (to.id="${$currentUser?.id}" && user.id="${$page.params?.id}")`,
 		})
 		messages = resultList.items
 		unsubscribe = await pb.collection('messages').subscribe('*', async ({action, record}) => {
@@ -31,11 +31,12 @@
 	})
 
 	async function sendMessage(){
-		const data = { text: newMessage, user: $currentUser.id, chat: $page.params?.id }
+		const data = { text: newMessage, user: $currentUser.id, to: $page.params?.id }
 		const createdMessage = await pb.collection('messages').create(data)
 		newMessage = ''
 	}
 </script>
+
 <div class="card max-w-2xl m-2 p-2 mx-auto max-sm:rounded-none max-sm:m-0 text-sm bg-violet-200 dark:bg-sky-900">
 	{#each messages as message (message.id)}
 		<div class="">
@@ -45,7 +46,7 @@
 			'bg-primary-300 dark:bg-cyan-700 rounded-tr-sm':'bg-secondary-300 dark:bg-sky-800 rounded-tl-sm'}
 			{message.expand?.user?.username==$currentUser?.username && 'mr-2 ml-auto'}">
 				<div class="font-bold">{message.expand?.user?.username}</div>
-				<p>{message.text}</p>
+				<p>{message.text} To: {message?.to}</p>
 			</div>
 		</div>
 	{/each}

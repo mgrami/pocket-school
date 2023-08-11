@@ -28,17 +28,10 @@
 	})
 </script>
 
-<div class="m-2 p-4">
+<div class="card max-w-2xl mx-auto m-2 p-2 bg-violet-100 dark:bg-sky-900" style="min-height: 80vh;">
 	{#each chats as chat (chat.id)}
-		<div class="m-2">
-			<div class="msg-text">
-<!-- <div>{JSON.stringify(chat?.expand?.members.filter(m => m.id !== $currentUser?.id)[0])}</div> -->
-				<p>
-					<a href="/messenger/chats/{chat?.id}" class="dark:text-white">
-						{(chat?.expand?.members.filter(m => m.id !== $currentUser?.id)[0])?.username}
-					</a>
-				</p>
-			</div>
-		</div>
+		<a href="chats/{chat?.id}" class="block card m-2 p-2 bg-violet-200 dark:bg-sky-800">
+			<span class="text-gray-600 dark:text-white">{chat?.name}</span>
+		</a>
 	{/each}
 </div>

@@ -67,6 +67,7 @@
 
 	function addVideoStream(video, stream) {
 		video.srcObject = stream
+		// video.setAttribute('src', stream)
 		video.addEventListener('loadedmetadata', () => {
 			video.play()
 		})
@@ -122,7 +123,7 @@
  		<video bind:this={video} autoPlay muted playsInline
 		class="w-1/4 max-w-3xl mt-0 ml-0 layer-2"></video>
 
-		<video bind:this={video2} autoPlay playsInline style="max-height: 100vh;"
+		<video bind:this={video2} autoPlay playsInline style="max-height: 100vh; object-fit: cover;"
 		class="w-full max-w-3xl mx-auto bg-black layer-1"></video>
 
 	</div>
