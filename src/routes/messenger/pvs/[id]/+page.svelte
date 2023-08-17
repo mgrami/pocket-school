@@ -6,6 +6,7 @@
 	let messages = []
 	let newMessage = ''
 	let unsubscribe = () => {}
+	let pv
 
 	onMount(async () => {
 		const resultList = await pb.collection('messages').getList(1, 50, {
@@ -31,9 +32,34 @@
 	})
 
 	async function sendMessage(){
+		if(!pv){
+			try{
+				const user2 = await pb.collection('users').getOne($page.params?.id)
+				pv = await pb.collection('pvs').create({
+					user1: $currentUser?.id,
+					user2: user2?.id,
+				})
+			}
+			catch(err){
+				console.log('could not create the pv: ',err)
+				return
+			}
+		}
 		const data = { text: newMessage, user: $currentUser.id, to: $page.params?.id }
 		const createdMessage = await pb.collection('messages').create(data)
 		newMessage = ''
+		pv = await pb.collection('pvs').update(pv?.id, {last_message: createdMessage.id}, {expand: 'last_message'})
+	}
+	async function deleteMessage(id){
+		if(confirm('Are you sure?')){
+			try{
+				await pb.collection('messages').delete(id)
+			}
+			catch(err){
+				console.log(err)
+			}
+		}
+		else return
 	}
 </script>
 
@@ -43,16 +69,35 @@
 			<div 
 			class="card m-2 mb-4 p-3 w-11/12 rounded-lg
 			{message.expand?.user?.username==$currentUser?.username? 
-			'bg-primary-300 dark:bg-cyan-700 rounded-tr-sm':'bg-secondary-300 dark:bg-sky-800 rounded-tl-sm'}
+			'bg-primary-300 dark:bg-cyan-700':'bg-secondary-300 dark:bg-sky-800'}
 			{message.expand?.user?.username==$currentUser?.username && 'mr-2 ml-auto'}">
 				<div class="font-bold">{message.expand?.user?.username}</div>
-				<p>{message.text} To: {message?.to}</p>
+				<p dir="auto">{message.text}</p>
+				<footer class="card-footer text-xs mt-2">
+					<span>
+						{(new Date(message.created)).toLocaleString('fa-IR', {
+							timeZone: 'Asia/Tehran',
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit',
+						})?.slice(5,17)}
+					</span>
+					{#if $currentUser?.id == message?.user}
+					<span on:click={() => deleteMessage(message?.id)} class="mx-1 px-1">
+						<img src="/icons/trash-icon.svg" alt="" style="width: 1em;" />
+					</span>
+					{/if}
+				</footer>
 			</div>
 		</div>
 	{/each}
-	<form on:submit|preventDefault={sendMessage} class="m-2 p-4">
-		<input placeholder="Message" type="text" bind:value={newMessage} 
+	<form on:submit|preventDefault={sendMessage} class="m-2 p-4" dir="auto">
+		<input placeholder="Message" type="text" bind:value={newMessage} dir="auto" 
 		class="input px-4 bg-secondary-100 dark:bg-sky-800">
 		<input type="submit" name="Send" class="btn btn-sm">
 	</form>
 </div>
+<!-- {JSON.stringify(pv?.expand?.last_message?.text)} -->
