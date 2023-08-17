@@ -24,7 +24,8 @@
 <div class="card max-w-2xl mx-auto m-2 p-2 bg-violet-100 dark:bg-sky-900" style="min-height: 20vh;">
 	<h1 class="text-center">Private Chats</h1>
 	{#each pvs as pv (pv.id)}
-		<a href="/messenger/pvs/{pv?.expand?.user2.id}" class="block card m-2 p-2 bg-violet-200 dark:bg-sky-800">
+<a href="/messenger/pvs/{$currentUser?.id==pv?.expand?.user1.id ? pv?.expand?.user2.id : pv?.expand?.user1.id}"
+class="block card m-2 p-2 bg-violet-200 dark:bg-sky-800">
 			<span class="text-gray-600 dark:text-white font-bold">{pv?.expand?.user2?.username}</span>
 			<p class="text-gray-600 dark:text-white" dir="auto">{pv?.expand?.last_message?.text}</p>
 		</a>

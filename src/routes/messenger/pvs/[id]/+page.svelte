@@ -25,6 +25,13 @@
 				messages = messages.filter(m => m.id !== record.id)
 			}
 		})
+
+		const resultList2 = await pb.collection('pvs').getList(1, 5, {
+			sort: 'created',
+			expand: 'user1,user2,last_message',
+			filter: `(user1.id="${$currentUser?.id}" && user2.id="${$page.params?.id}") || (user2.id="${$currentUser?.id}" && user1.id="${$page.params?.id}")`,
+		})
+		pv = resultList2.items[0]
 	})
 
 	onDestroy(()  => {
@@ -100,4 +107,5 @@
 		<input type="submit" name="Send" class="btn btn-sm">
 	</form>
 </div>
+{JSON.stringify(pv?.length)}
 <!-- {JSON.stringify(pv?.expand?.last_message?.text)} -->
